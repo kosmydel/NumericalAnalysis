@@ -1,0 +1,33 @@
+<div class="main">
+  <h1>Look up the Wikipedia</h1>
+  <div>
+    <table>
+      <tr>
+        <td style="width: 100%;">
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Enter your query</mat-label>
+            <input matInput placeholder="Polish cuisine" [(ngModel)]="userQuery">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="fill">
+            <button mat-button (click)="makeQuery()">Search</button>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <mat-divider></mat-divider><br>
+  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+  <div *ngIf="results">
+    <p>Fetched in {{results.time}}s</p>
+    <mat-card *ngFor="let res of results.data" style="margin-bottom: 10px;">
+      <mat-card-title>{{res[1].slice(0, -4).replaceAll('_', ' ')}}</mat-card-title>
+      <mat-card-subtitle>{{res[0] | number: '1.3-3'}}</mat-card-subtitle>
+      <mat-card-actions>
+        <a mat-button target="_blank" [href]="'https://en.wikipedia.org/wiki/' + res[1].slice(0, -4)">GO</a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+</div>
